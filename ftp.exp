@@ -1,0 +1,47 @@
+#!/usr/bin/expect
+set ip [lindex $argv 0]
+set file [lindex $argv 1]
+
+proc ftp_server {} {
+send "ftp 192.168.201.98\r"
+exec sleep 1
+expect "*none):"
+send "pz\r"
+exec sleep 1
+expect "Password:"
+send "123\r"
+exec sleep 1
+expect "*ftp*"
+}
+
+spawn ping $ip -c 3
+
+expect {
+   "*64 bytes*" {
+exec sleep 2
+spawn telnet $ip
+expect "*Password:*"
+send "8631115\r"
+exec sleep 1
+expect "*>*"
+send  "dir\r"
+expect {
+"*config.cfg*" {ftp_server;send "put config.cfg $file \r"}
+"*startup.cfg*" {ftp_server;send "put startup.cfg $file \r"}
+"*vrpcfg.txt" {ftp_server;send "put vrpcfg.txt $file \r"}
+}
+exec sleep 2
+expect "*ftp*"
+send "bye\r"
+exec sleep 1
+expect "*>"
+send "quit"
+}
+   "*timeout*" {
+
+     exit1
+}
+
+}
+
+
