@@ -1,4 +1,5 @@
 # switchconfig_backup
+@作者：陈传林
 代码由shell和expect编写，用于批量自动备份园区网交换机配置。
 
 1、工作环境：
