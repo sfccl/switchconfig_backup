@@ -1,5 +1,6 @@
 # switchconfig_backup
 代码由shell和expect编写，用于批量自动备份园区网交换机配置。
+
 1、工作环境：
   工作机：linux系统，如centos6.8(Final)。
   ftp服务器：windows系统(ip:192.168.201.98)，已安装ftp服务，用于存储备份文件。ftp备份用户参数(用户名/密码)：pz/123
